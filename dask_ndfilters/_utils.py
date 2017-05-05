@@ -115,26 +115,27 @@ def _get_depth_boundary(ndim, depth, boundary=None):
     return depth, boundary
 
 
-def _get_size(ndim, size):
+def _get_shape(ndim, size):
     if not isinstance(ndim, numbers.Integral):
         raise TypeError("The ndim must be of integral type.")
 
+    shape = size
     if isinstance(size, numbers.Number):
-        size = ndim * (size,)
-    size = numpy.array(size)
+        shape = ndim * (size,)
+    shape = numpy.array(shape)
 
-    if size.ndim != 1:
+    if shape.ndim != 1:
         raise RuntimeError("The size must have only one dimension.")
-    if len(size) != ndim:
+    if len(shape) != ndim:
         raise RuntimeError(
             "The size must have a length equal to the number of dimensions."
         )
-    if not issubclass(size.dtype.type, numbers.Integral):
+    if not issubclass(shape.dtype.type, numbers.Integral):
         raise TypeError("The size must be of integral type.")
 
-    size = tuple(size)
+    shape = tuple(shape)
 
-    return size
+    return shape
 
 
 def _get_origin(size, origin=0):
